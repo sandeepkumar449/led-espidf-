@@ -1,0 +1,42 @@
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "driver/gpio.h"
+#include "sdkconfig.h"
+
+// Define two separate GPIO pins for different LEDs
+#define LED_GPIO_1 GPIO_NUM_5  // LED 1 on GPIO 5
+#define LED_GPIO_2 GPIO_NUM_4  // LED 2 on GPIO 4
+#define LED_GPIO_3 GPIO_NUM_2  // LED 3 on GPIO 2
+
+void app_main(void)
+{
+    // Reset both GPIO pins and configure them as outputs
+    gpio_reset_pin(LED_GPIO_1);
+    gpio_set_direction(LED_GPIO_1, GPIO_MODE_OUTPUT);
+
+    gpio_reset_pin(LED_GPIO_2);
+    gpio_set_direction(LED_GPIO_2, GPIO_MODE_OUTPUT);
+
+    gpio_reset_pin(LED_GPIO_3);
+    gpio_set_direction(LED_GPIO_3, GPIO_MODE_OUTPUT);
+
+    while (1) {
+        // Control LED 1
+        gpio_set_level(LED_GPIO_1, 1);  // Turn LED 1 on
+        vTaskDelay(1000 / portTICK_PERIOD_MS);  // Delay for 1 second
+        gpio_set_level(LED_GPIO_1, 0);  // Turn LED 1 off
+        vTaskDelay(1000 / portTICK_PERIOD_MS);  // Delay for 1 second
+
+        // Control LED 2
+        gpio_set_level(LED_GPIO_2, 1);  // Turn LED 2 on
+        vTaskDelay(1000 / portTICK_PERIOD_MS);  // Delay for 1 second
+        gpio_set_level(LED_GPIO_2, 0);  // Turn LED 2 off
+        vTaskDelay(1000 / portTICK_PERIOD_MS);  // Delay for 1 second
+
+        // Control LED 3
+        gpio_set_level(LED_GPIO_3, 1);  // Turn LED 2 on
+        vTaskDelay(1000 / portTICK_PERIOD_MS);  // Delay for 1 second
+        gpio_set_level(LED_GPIO_3, 0);  // Turn LED 2 off
+        vTaskDelay(1000 / portTICK_PERIOD_MS);  // Delay for 1 second
+    }
+}
